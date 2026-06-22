@@ -48,6 +48,10 @@ create trigger on_auth_user_created
 -- ============================================================
 -- AUDITS TABLE
 -- Stores all audit results
+-- NOTE: rich AI fields (quickWins, currentHeadline, improvedHeadline,
+--       currentCTA, improvedCTA, aboveFoldAnalysis, trustGapAnalysis,
+--       currentMetaDescription, improvedMetaDescription) are stored
+--       in raw_analysis JSONB — no schema migration needed for new fields.
 -- ============================================================
 create table public.audits (
   id uuid primary key default uuid_generate_v4(),
@@ -68,6 +72,8 @@ create table public.audits (
   readability_score integer,
   value_proposition_score integer,
   seo_score integer,
+  -- Stores full AI response including quickWins[], currentHeadline,
+  -- improvedHeadline, currentCTA, improvedCTA, aboveFoldAnalysis, trustGapAnalysis
   raw_analysis jsonb,
   created_at timestamptz not null default now()
 );
@@ -85,3 +91,6 @@ create policy "Users can insert their own audits"
 
 -- Index for faster queries
 create index audits_user_id_created_at_idx on public.audits(user_id, created_at desc);
+-- GIN index on raw_analysis for future JSON queries
+create index audits_raw_analysis_gin_idx on public.audits using gin(raw_analysis);
+

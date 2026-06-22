@@ -75,6 +75,9 @@ export default function Navbar({ variant = 'landing', userEmail }: NavbarProps) 
               <span className={`${styles.userEmail} hide-mobile`}>{userEmail}</span>
               <Link href="/dashboard" className="btn btn-ghost btn-sm">Dashboard</Link>
               <Link href="/dashboard/history" className="btn btn-ghost btn-sm hide-mobile">History</Link>
+              <form action="/api/auth/signout" method="POST" className="hide-mobile">
+                <button type="submit" className="btn btn-ghost btn-sm" id="nav-signout-btn">Sign out</button>
+              </form>
             </>
           )}
 
@@ -109,6 +112,9 @@ export default function Navbar({ variant = 'landing', userEmail }: NavbarProps) 
             <>
               <Link href="/dashboard" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>Dashboard</Link>
               <Link href="/dashboard/history" className={styles.mobileLink} onClick={() => setMobileOpen(false)}>History</Link>
+              <form action="/api/auth/signout" method="POST">
+                <button type="submit" className={styles.mobileLink} style={{ width: '100%', textAlign: 'left', background: 'none', border: 'none', cursor: 'pointer', color: 'var(--brand-danger)' }}>Sign out</button>
+              </form>
             </>
           )}
         </div>
