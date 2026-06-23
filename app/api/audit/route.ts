@@ -12,6 +12,7 @@ export interface QuickWin {
   impact: 'High' | 'Medium' | 'Low'
   fix: string
   effort: 'Minutes' | 'Hours' | 'Days'
+  estimated_lift: string // e.g. "+12-18% CTR lift" or "+8-15% conversion lift"
 }
 
 export interface AlternativeSuggestion {
@@ -30,6 +31,11 @@ export interface BusinessProfile {
   business_model: string         // e.g. "Freemium Social Platform", "B2B SaaS"
   primary_user_goal: string      // e.g. "Connect and communicate with friends", "Ship production apps faster"
   primary_conversion_goal: string // e.g. "Download desktop app", "Start free project"
+}
+
+export interface AIRecommendation {
+  recommendation: string
+  reasoning: string
 }
 
 export interface AuditResult {
@@ -65,7 +71,7 @@ export interface AuditResult {
   topImprovements: string[]
   strengths: string[]
   weaknesses: string[]
-  recommendations: string[]
+  recommendations: AIRecommendation[]
   aboveFoldAnalysis: string
   trustGapAnalysis: string
 }
@@ -673,6 +679,7 @@ function generateMockAudit(url: string, data: ExtractedPageData): AuditResult {
       {
         impact: 'High',
         effort: 'Minutes',
+        estimated_lift: '+12-18% CTR lift',
         fix: isCtaStrong 
           ? `Keep the primary button "${currentCTA}" centered and above the fold. Optimize the background contrast to enhance visibility.`
           : `Change your primary CTA copy from "${currentCTA}" to "${improvedCTA}". Benefit-focused CTAs remove user hesitation and boost conversion.`
@@ -680,6 +687,7 @@ function generateMockAudit(url: string, data: ExtractedPageData): AuditResult {
       {
         impact: 'High',
         effort: 'Hours',
+        estimated_lift: '+8-15% Conv lift',
         fix: isHeadlineStrong
           ? `Your headline "${currentHeadline}" is strong. We suggest running split tests against alternative B ("${improvedHeadlines[1].copy}") to test user segment hooks.`
           : `Change H1 headline from "${currentHeadline}" to "${improvedHeadline}". Clear benefit copy helps visitors understand your product outcome under 3 seconds.`
@@ -687,6 +695,7 @@ function generateMockAudit(url: string, data: ExtractedPageData): AuditResult {
       {
         impact: 'Medium',
         effort: 'Hours',
+        estimated_lift: '+5-10% trust lift',
         fix: data.trustSignals.hasTestimonials
           ? `Move testimonials higher up the page to catch user interest earlier in the scroll.`
           : `Add 2-3 testimonials or ratings badges. The current page has zero visible trust signals, creating friction.`
@@ -694,6 +703,7 @@ function generateMockAudit(url: string, data: ExtractedPageData): AuditResult {
       {
         impact: 'Medium',
         effort: 'Minutes',
+        estimated_lift: '+4-8% SEO lift',
         fix: `Update your HTML meta description. Changing it to the suggested version will include search keywords and boost your Google CTR.`
       }
     ],
@@ -730,11 +740,26 @@ function generateMockAudit(url: string, data: ExtractedPageData): AuditResult {
     ],
 
     recommendations: [
-      `Run a split test comparing the current headline "${currentHeadline}" with the rewritten outcome statement: "${improvedHeadline}".`,
-      `Replace passive button copy like "${currentCTA}" with the category-focused CTA: "${improvedCTA}".`,
-      `Ensure key trust elements (like ratings badges or logo strips) are visible above the fold.`,
-      `Optimize page load performance by compressing large hero images and deferring non-critical scripts.`,
-      `Address common conversion friction points by introducing a short FAQ section near the footer.`
+      {
+        recommendation: `Run a split test comparing the current headline "${currentHeadline}" with the rewritten outcome statement: "${improvedHeadline}".`,
+        reasoning: `Testing direct outcome hooks against category headlines typically yields +10-25% improvement in click-through retention. Outcome statements clarify value immediately and reduce cognitive load for visitors.`
+      },
+      {
+        recommendation: `Replace passive button copy like "${currentCTA}" with the category-focused CTA: "${improvedCTA}".`,
+        reasoning: `Strong action-oriented CTAs specify what visitors will get after clicking, removing friction. Category-specific context words (like "docs", "project", "listing") improve visual saliency.`
+      },
+      {
+        recommendation: `Ensure key trust elements (like ratings badges or logo strips) are visible above the fold.`,
+        reasoning: `Early trust indicators lower signup anxiety. Placed near primary CTA buttons, badges or partner logos act as powerful psychological compliance cues.`
+      },
+      {
+        recommendation: `Optimize page load performance by compressing large hero images and deferring non-critical scripts.`,
+        reasoning: `A 1-second delay in page load time can reduce conversions by up to 7%. Compressing and optimizing images preserves visitor attention and reduces early bounce rates.`
+      },
+      {
+        recommendation: `Address common conversion friction points by introducing a short FAQ section near the footer.`,
+        reasoning: `FAQs answer prospective customer objections right at the point of conversion decision. Keeping answers short helps resolve late-stage friction and boosts conversion rates.`
+      }
     ],
 
     aboveFoldAnalysis: `Within the first few seconds, users are greeted with the headline "${currentHeadline}" and button "${currentCTA}". The copy describes your category but does not paint a vivid picture of the user's ultimate outcome, leading to lower engagement.`,
@@ -928,21 +953,25 @@ Return ONLY valid JSON matching this EXACT structure. No markdown, no explanatio
     {
       "impact": "High",
       "effort": "Minutes",
+      "estimated_lift": "<Estimated percentage lift, e.g. '+12-18% CTR lift' or '+8-15% conversion lift'>",
       "fix": "<Single specific action. Quote old → new. E.g.: Change CTA from \\"Learn More\\" to \\"Start My Free Trial\\" — this one change can lift CTR by 10-30%>"
     },
     {
       "impact": "High",
       "effort": "Hours",
+      "estimated_lift": "<Estimated percentage lift, e.g. '+8-15% conversion lift'>",
       "fix": "<Second quick win — specific and actionable>"
     },
     {
       "impact": "Medium",
       "effort": "Hours",
+      "estimated_lift": "<Estimated percentage lift, e.g. '+5-10% trust lift'>",
       "fix": "<Third quick win>"
     },
     {
       "impact": "Medium",
-      "effort": "Days",
+      "effort": "Minutes",
+      "estimated_lift": "<Estimated percentage lift, e.g. '+4-8% SEO lift'>",
       "fix": "<Fourth quick win>"
     }
   ],
@@ -973,11 +1002,26 @@ Return ONLY valid JSON matching this EXACT structure. No markdown, no explanatio
   ],
 
   "recommendations": [
-    "<Rec 1 — specific action + expected impact>",
-    "<Rec 2>",
-    "<Rec 3>",
-    "<Rec 4>",
-    "<Rec 5>"
+    {
+      "recommendation": "<Direct, actionable advice. E.g. 'Promote client logo strip above the fold.'>",
+      "reasoning": "<3-4 lines explanation of why this works. Explain the psychology, cognitive load, or trust building reason behind it.>"
+    },
+    {
+      "recommendation": "<Recommendation 2>",
+      "reasoning": "<Reasoning 2>"
+    },
+    {
+      "recommendation": "<Recommendation 3>",
+      "reasoning": "<Reasoning 3>"
+    },
+    {
+      "recommendation": "<Recommendation 4>",
+      "reasoning": "<Reasoning 4>"
+    },
+    {
+      "recommendation": "<Recommendation 5>",
+      "reasoning": "<Reasoning 5>"
+    }
   ],
 
   "aboveFoldAnalysis": "<2-3 sentences about exactly what a visitor sees in the first 3 seconds. Quote the actual headline and CTA. Answer: Does it instantly communicate WHO this is for, WHAT they get, and WHY now?>",
@@ -1097,7 +1141,7 @@ export async function POST(request: NextRequest) {
         overall_score: analysis.overall_score,
         strengths: analysis.strengths,
         weaknesses: analysis.weaknesses,
-        recommendations: analysis.recommendations,
+        recommendations: analysis.recommendations.map(r => typeof r === 'string' ? r : r.recommendation),
         top_problems: analysis.topProblems,
         top_improvements: analysis.topImprovements,
         suggested_headline: analysis.improvedHeadline,

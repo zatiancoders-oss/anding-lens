@@ -797,4 +797,660 @@
   margin: 0 0 12px;
 }
 
+/* ── Toolbar Actions (Share/PDF) ────────────────────────────── */
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 16px;
+  margin-bottom: 12px;
+}
+
+.actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* ── Lift Badges ────────────────────────────────────────────── */
+.liftBadge {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ── Accordion Recommendations ──────────────────────────────── */
+.recItemWrapper {
+  border-bottom: 1px solid var(--border-primary);
+  padding: 16px 0;
+}
+
+.recItemWrapper:last-child {
+  border-bottom: none;
+}
+
+.recItem {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+  user-select: none;
+  transition: opacity 0.2s;
+}
+
+.recItem:hover {
+  opacity: 0.95;
+}
+
+.recNum {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-weight: 700;
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.recMain {
+  flex-grow: 1;
+}
+
+.recText {
+  font-size: 0.9375rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.whyBtn {
+  background: var(--bg-tertiary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-primary);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.whyBtn:hover {
+  background: var(--border-primary);
+  color: var(--text-primary);
+}
+
+.recReasoning {
+  padding-left: 40px;
+  margin-top: 12px;
+  animation: slideDown 0.25s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  overflow: hidden;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+    max-height: 0;
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+    max-height: 200px;
+  }
+}
+
+.reasoningBubble {
+  background: rgba(124, 88, 246, 0.04);
+  border-left: 3px solid var(--brand-primary);
+  padding: 12px 16px;
+  border-radius: 0 8px 8px 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--text-secondary);
+}
+
+/* ── Interactive ROI Calculator ─────────────────────────────── */
+.calculatorCard {
+  padding: 24px 28px;
+}
+
+.calculatorHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.calculatorBadge {
+  background: rgba(245, 158, 11, 0.15);
+  color: #f59e0b;
+  border: 1px solid rgba(245, 158, 11, 0.25);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.calcGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.slidersCol {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.sliderGroup {
+  display: flex;
+  flex-direction: column;
+}
+
+.sliderLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  margin-bottom: 8px;
+  color: var(--text-secondary);
+}
+
+.sliderLabel strong {
+  color: var(--text-primary);
+  font-size: 0.9375rem;
+}
+
+.calcSlider {
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 9999px;
+  background: var(--bg-tertiary);
+  outline: none;
+  cursor: pointer;
+}
+
+.calcSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--brand-primary);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(124, 88, 246, 0.5);
+  transition: transform 0.1s;
+}
+
+.calcSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.sliderLimits {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin-top: 4px;
+}
+
+.outputCol {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.metricsWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px dashed var(--border-primary);
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.metricItem {
+  display: flex;
+  flex-direction: column;
+}
+
+.metricItemGood {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+
+.metricLabel {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+
+.metricValue {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+}
+
+.metricValueGood {
+  font-size: 1.125rem;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.metricSeparator {
+  font-size: 1.25rem;
+  color: var(--text-tertiary);
+}
+
+.conversionsGain {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.gainLabel {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.gainVal {
+  background: rgba(34, 197, 94, 0.15);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  font-size: 0.875rem;
+  font-weight: 800;
+  padding: 2px 8px;
+  border-radius: 6px;
+}
+
+.revenueGain {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  background: rgba(34, 197, 94, 0.05);
+  border: 1px solid rgba(34, 197, 94, 0.15);
+  border-radius: 8px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.revLabel {
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.revVal {
+  font-size: 1.75rem;
+  font-weight: 900;
+  color: #22c55e;
+  text-shadow: 0 0 10px rgba(34, 197, 94, 0.1);
+}
+
+.calculatorNote {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.4;
+  text-align: center;
+}
+
+/* ── AI Visual Preview Mockup ──────────────────────────────── */
+.mockupCard {
+  padding: 24px 28px;
+}
+
+.mockupHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.mockupBadge {
+  background: rgba(139, 92, 246, 0.15);
+  color: #8b5cf6;
+  border: 1px solid rgba(139, 92, 246, 0.25);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 6px;
+  text-transform: uppercase;
+}
+
+.mockupGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+}
+
+.wireframeBox {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.wireframeLabelBad {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: #ef4444;
+}
+
+.wireframeLabelGood {
+  font-size: 0.875rem;
+  font-weight: 800;
+  color: #22c55e;
+}
+
+.wireframeCanvas {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-primary);
+  border-radius: 12px;
+  height: 240px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.wfNav {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.625rem;
+  font-weight: 700;
+  color: var(--text-tertiary);
+  border-bottom: 1px solid var(--border-primary);
+  padding-bottom: 6px;
+}
+
+.wfNavLinks {
+  color: var(--text-tertiary);
+}
+
+.wfNavLinksGood {
+  color: #22c55e;
+}
+
+.wfHero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 8px;
+}
+
+.wfHeroGood {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  flex-grow: 1;
+  gap: 6px;
+}
+
+.wfTitleBox {
+  background: var(--border-primary);
+  width: 130px;
+  height: 12px;
+  border-radius: 3px;
+}
+
+.wfTitleBoxGood {
+  background: linear-gradient(90deg, var(--brand-primary), var(--brand-accent));
+  width: 170px;
+  height: 14px;
+  border-radius: 3px;
+}
+
+.wfSubTitleBox {
+  background: var(--bg-secondary);
+  width: 180px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.wfSubTitleBoxGood {
+  background: var(--border-primary);
+  width: 190px;
+  height: 8px;
+  border-radius: 2px;
+}
+
+.wfBadge {
+  font-size: 0.5rem;
+  font-weight: 700;
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  padding: 1px 4px;
+  border-radius: 2px;
+  border: 1px solid rgba(245, 158, 11, 0.15);
+}
+
+.wfCtaBad {
+  background: var(--border-primary);
+  color: var(--text-tertiary);
+  font-size: 0.5rem;
+  font-weight: 700;
+  width: 60px;
+  height: 14px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 4px;
+}
+
+.wfCtaGroup {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.wfCtaGood {
+  background: var(--brand-primary);
+  color: white;
+  font-size: 0.5rem;
+  font-weight: 700;
+  width: 70px;
+  height: 16px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wfCtaSec {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
+  font-size: 0.5rem;
+  font-weight: 700;
+  width: 60px;
+  height: 16px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wfLogosStrip {
+  font-size: 0.5rem;
+  color: var(--text-tertiary);
+  border-top: 1px solid var(--border-primary);
+  padding-top: 4px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.wfProofStrip {
+  font-size: 0.5rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  border-top: 1px dashed var(--border-primary);
+  padding-top: 4px;
+  width: 100%;
+  margin-top: 6px;
+}
+
+.wfBody {
+  border-top: 1px solid var(--border-primary);
+  padding-top: 6px;
+  font-size: 0.5rem;
+  color: var(--text-tertiary);
+}
+
+.wfBodyGood {
+  border-top: 1px dashed var(--border-primary);
+  padding-top: 6px;
+  width: 100%;
+}
+
+.wfQuote {
+  font-size: 0.5rem;
+  color: var(--text-secondary);
+  font-style: italic;
+  text-align: center;
+  background: var(--bg-secondary);
+  padding: 4px;
+  border-radius: 4px;
+}
+
+.wfContentBlock {
+  background: var(--bg-secondary);
+  height: 20px;
+  border-radius: 3px;
+}
+
+.wireframeNote {
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.wireframeNoteGood {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  margin: 0;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+/* ── Media Queries ────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .calcGrid, .mockupGrid {
+    grid-template-columns: 1fr;
+  }
+  .outputCol {
+    padding: 20px;
+  }
+}
+
+/* ============================================================
+   🖨️ PDF PRINT MEDIA STYLESHEET
+   ============================================================ */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+    font-size: 12pt !important;
+  }
+
+  .toolbar {
+    display: none !important; /* Hide back, print, share buttons */
+  }
+
+  .page {
+    padding: 0 !important;
+    margin: 0 !important;
+    gap: 15px !important;
+  }
+
+  .card {
+    background: white !important;
+    border: 1px solid #ccc !important;
+    box-shadow: none !important;
+    break-inside: avoid !important; /* Prevent page cuts */
+    padding: 16px !important;
+  }
+
+  .scoreCard {
+    page-break-inside: avoid;
+  }
+
+  /* Force background print colors */
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  .calcSlider, .slidersCol, .calculatorNote {
+    display: none !important; /* Hide interactive sliders in PDF */
+  }
+
+  .calcGrid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .outputCol {
+    background: #f9f9f9 !important;
+    border: 1px solid #ddd !important;
+    width: 100% !important;
+  }
+
+  .whyBtn svg {
+    display: none !important; /* Hide chevron on print */
+  }
+
+  .recReasoning {
+    max-height: none !important;
+    display: block !important;
+    opacity: 1 !important;
+    padding-left: 20px !important;
+  }
+
+  .reasoningBubble {
+    background: #f7f7f7 !important;
+    border-left: 3px solid #7c58f6 !important;
+    color: #444 !important;
+  }
+}
+
+
 
