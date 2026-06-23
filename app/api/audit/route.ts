@@ -4,7 +4,7 @@ import OpenAI from 'openai'
 import * as cheerio from 'cheerio'
 
 // Config for Vercel Serverless Function duration (maximum allowed)
-export const maxDuration = 60
+export const maxDuration = 300
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 

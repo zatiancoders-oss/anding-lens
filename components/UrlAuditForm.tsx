@@ -44,8 +44,18 @@ export default function UrlAuditForm({ canAudit }: UrlAuditFormProps) {
       })
 
       if (!res.ok) {
-        const data = await res.json()
-        throw new Error(data.error || 'Audit failed. Please try again.')
+        let errorMsg = 'Audit failed. Please try again.'
+        try {
+          const data = await res.json()
+          errorMsg = data.error || errorMsg
+        } catch (e) {
+          if (res.status === 504) {
+            errorMsg = 'The audit request timed out. The OpenRouter free model took too long to respond. Please try again.'
+          } else {
+            errorMsg = `Server error (${res.status}). Please check your API key or try again.`
+          }
+        }
+        throw new Error(errorMsg)
       }
 
       const data = await res.json()
