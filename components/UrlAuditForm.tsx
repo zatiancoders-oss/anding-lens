@@ -34,7 +34,7 @@ export default function UrlAuditForm({ canAudit }: UrlAuditFormProps) {
 
     setLoading(true)
     setError(null)
-    setProgress('Fetching page content...')
+    setProgress('Analyzing website copy with AI... (takes 15-30s)')
 
     try {
       const res = await fetch('/api/audit', {
@@ -48,8 +48,18 @@ export default function UrlAuditForm({ canAudit }: UrlAuditFormProps) {
         throw new Error(data.error || 'Audit failed. Please try again.')
       }
 
-      setProgress('Analyzing with AI...')
       const data = await res.json()
+      
+      // Save full audit result to localStorage for Vercel bypass compatibility
+      if (data.audit) {
+        try {
+          localStorage.setItem(`landinglens-audit-${data.auditId}`, JSON.stringify(data.audit))
+        } catch (e) {
+          console.error('Failed to write audit to localStorage:', e)
+        }
+      }
+
+      setProgress('Redirecting to report...')
       router.push(`/dashboard/audit/${data.auditId}`)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong')

@@ -12,10 +12,18 @@ export function isDemoMode() {
 }
 
 // Simple file-based database for offline testing
-const DB_FILE = path.join(process.cwd(), 'local_db.json')
+const PROJECT_DB_FILE = path.join(process.cwd(), 'local_db.json')
+const DB_FILE = process.env.VERCEL ? '/tmp/local_db.json' : PROJECT_DB_FILE
 
 function readDb() {
   try {
+    // If running in Vercel serverless environment, copy the initial seeded database from project root to /tmp/
+    if (process.env.VERCEL && !fs.existsSync(DB_FILE)) {
+      if (fs.existsSync(PROJECT_DB_FILE)) {
+        fs.copyFileSync(PROJECT_DB_FILE, DB_FILE)
+      }
+    }
+
     if (fs.existsSync(DB_FILE)) {
       return JSON.parse(fs.readFileSync(DB_FILE, 'utf8'))
     }

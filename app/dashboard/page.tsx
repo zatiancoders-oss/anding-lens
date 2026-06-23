@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import UrlAuditForm from '@/components/UrlAuditForm'
+import RecentAuditsList from './RecentAuditsList'
 import styles from './page.module.css'
 
 function getScoreColor(score: number) {
@@ -99,61 +100,8 @@ export default async function DashboardPage() {
         )}
       </div>
 
-      {/* Recent Audits */}
-      {auditsList.length > 0 && (
-        <div className={styles.recentSection}>
-          <div className={styles.sectionHeader}>
-            <h2 className={styles.sectionTitle}>Recent Audits</h2>
-            <Link href="/dashboard/history" className="btn btn-ghost btn-sm">
-              View all →
-            </Link>
-          </div>
-
-          <div className={styles.auditList}>
-            {auditsList.map((audit) => (
-              <Link
-                key={audit.id}
-                href={`/dashboard/audit/${audit.id}`}
-                className={`card ${styles.auditItem}`}
-              >
-                <div className={styles.auditInfo}>
-                  <div className={styles.auditIcon}>
-                    <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
-                    </svg>
-                  </div>
-                  <div>
-                    <p className={styles.auditUrl}>{audit.url}</p>
-                    {audit.page_title && (
-                      <p className={styles.auditTitle}>{audit.page_title}</p>
-                    )}
-                    <p className={styles.auditDate}>{formatDate(audit.created_at)}</p>
-                  </div>
-                </div>
-                <div className={styles.auditScore}>
-                  <span className={`badge ${getScoreBadge(audit.overall_score)}`}>
-                    {audit.overall_score}
-                  </span>
-                  <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="currentColor" style={{ color: 'var(--text-tertiary)' }}>
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                  </svg>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
-
-      {/* Empty state */}
-      {(!recentAudits || recentAudits.length === 0) && (
-        <div className={`card ${styles.emptyState}`}>
-          <div className={styles.emptyIcon}>🔍</div>
-          <h3 className={styles.emptyTitle}>No audits yet</h3>
-          <p className={styles.emptyDesc}>
-            Submit your first landing page URL above to get started.
-          </p>
-        </div>
-      )}
+      {/* Recent Audits (with client-side fallback) */}
+      <RecentAuditsList initialAudits={auditsList} />
     </div>
   )
 }

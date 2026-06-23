@@ -3,6 +3,9 @@ import { createClient } from '@/lib/supabase/server'
 import OpenAI from 'openai'
 import * as cheerio from 'cheerio'
 
+// Config for Vercel Serverless Function duration (maximum allowed)
+export const maxDuration = 60
+
 // ─── Types ────────────────────────────────────────────────────────────────────
 
 export interface QuickWin {
@@ -1107,7 +1110,7 @@ export async function POST(request: NextRequest) {
         seo_score: analysis.seo_score,
         raw_analysis: analysis,  // stores ALL fields including quickWins, before/after, etc.
       })
-      .select('id')
+      .select('*')
       .single()
 
     if (dbError) {
@@ -1119,7 +1122,7 @@ export async function POST(request: NextRequest) {
       .update({ audit_count_this_month: profile.audit_count_this_month + 1 })
       .eq('id', user.id)
 
-    return NextResponse.json({ auditId: audit.id })
+    return NextResponse.json({ auditId: audit.id, audit })
 
   } catch (err: unknown) {
     console.error('Audit error:', err)
